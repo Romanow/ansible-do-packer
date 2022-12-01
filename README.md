@@ -1,4 +1,6 @@
-# Vagrant box
+# DigitalOcean image
+
+[![Build project](https://github.com/Romanow/ansible-do-packer/actions/workflows/build.yml/badge.svg)](https://github.com/Romanow/ansible-do-packer/actions/workflows/build.yml)
 
 Создание образа Ubuntu 22.04 LTS для [DigitalOcean](https://digitalocean.com). Образ содержит:
 
@@ -19,6 +21,8 @@
 
 ```shell
 $ echo 'do_token = "<DigitalOcean token>"' > vars.pkrvars.hcl
+
+$ echo "public_key = \"$(cat ~/.ssh/id_rsa.pub)\"" >> vars.pkrvars.hcl
 
 $ packer build -var-file=vars.pkrvars.hcl template.pkr.hcl
 ```

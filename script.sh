@@ -2,11 +2,15 @@
 
 set -ex
 
-sleep 30
+# wait on cloud-init complete (https://github.com/hashicorp/packer/issues/2639)
+timeout 180 /bin/bash -c \
+  'until stat /var/lib/cloud/instance/boot-finished 2>/dev/null; do echo waiting ...; sleep 1; done'
+
+export DEBIAN_FRONTEND=noninteractive
 
 # install packages
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y \
+apt-get install -y \
   net-tools \
   wget \
   curl \
@@ -24,7 +28,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   software-properties-common
 
 # fish
-sudo apt-add-repository -y ppa:fish-shell/release-3
+apt-add-repository -y ppa:fish-shell/release-3
 
 # docker
 sudo mkdir -p /etc/apt/keyrings
