@@ -1,0 +1,5 @@
+.idea/
+builds/
+packer_cache/
+vars.pkrvars.hcl
+*.log

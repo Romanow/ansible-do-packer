@@ -1,0 +1,24 @@
+name: Build project
+on:
+  push:
+    branch: [ master ]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Init and Validate
+        run: |-
+          packer init template.pkr.hcl
+          packer validate template.pkr.hcl
+        env:
+          PKR_VAR_do_token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+          PKR_VAR_public_key: ${{ secrets.USER_PUBLIC_KEY }}
+
+      - name: Build
+        run: packer build template.pkr.hcl
+        env:
+          PKR_VAR_do_token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+          PKR_VAR_public_key: ${{ secrets.USER_PUBLIC_KEY }}
