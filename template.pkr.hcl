@@ -22,7 +22,7 @@ variable "vm_region" {
 variable "vm_size" {
   type        = string
   description = "DigitalOcean image default size"
-  default     = "s-1vcpu-2gb"
+  default     = "s-1vcpu-1gb"
 }
 
 variable "vm_image_name" {
